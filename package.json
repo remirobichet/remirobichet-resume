@@ -12,5 +12,10 @@
   },
   "bin": {
     "remirobichet-resume": "./index.js"
-  }
+  },
+  "keywords": [
+    "cli",
+    "resume",
+    "remirobichet"
+  ]
 }

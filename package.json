@@ -5,5 +5,9 @@
   "main": "index.js",
   "scripts": {},
   "author": "Rémi Robichet",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "inquirer": "^7.0.3"
+  }
 }

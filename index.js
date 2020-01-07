@@ -48,6 +48,16 @@ function handleResume() {
                     console.log(blue(info.mission));
                     console.log();
                 });
+            } else if (answer.resumeOptions === 'Skills') {
+                let buffer = '';
+                options.forEach((info, it) => {
+                    buffer += whiteBgBlue(info) + ' ';
+                    if ((it + 1) % 3 === 0) {
+                        console.log(buffer);
+                        console.log();
+                        buffer = '';
+                    }
+                });
             } else {
                 options.forEach(info => {
                     console.log(blue(info));

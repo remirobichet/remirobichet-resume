@@ -1,11 +1,9 @@
 {
-  "name": "remirobichet_resume",
+  "name": "remirobichet-resume",
   "version": "1.0.0",
   "description": "Rémi Robichet resume",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "Rémi Robichet",
   "license": "MIT"
 }

@@ -57,6 +57,10 @@ function handleResume() {
                         console.log();
                         buffer = '';
                     }
+                    if (it + 1 === options.length) {
+                        console.log(buffer);
+                        console.log();
+                    }
                 });
             } else {
                 options.forEach(info => {

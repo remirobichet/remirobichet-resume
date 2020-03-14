@@ -4,7 +4,9 @@
 
 const inquirer = require("inquirer");
 const chalk = require("chalk");
-const data = require("./data.json");
+const bent = require("bent");
+const getJSON = bent('json');
+let data = {};
 
 // add response color
 const whiteBgBlue = chalk.bold.white.bgBlue;
@@ -13,14 +15,17 @@ const green = chalk.bold.green;
 const green_ = chalk.bold.underline.green;
 const grey = chalk.bold.grey;
 
-const resumeOptions = {
-    type: "list",
-    name: "resumeOptions",
-    message: "What do you want to know",
-    choices: [...Object.keys(data), "Exit"]
+const getHttpData = async () => {
+    data = await getJSON('http://functions.remirobichet.fr/.netlify/functions/api/me?lang=en');
+    showResume()
 };
 
-function showResume() {
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+const showResume = () => {
     console.log(grey(new inquirer.Separator()));
     console.log();
     console.log(green("Hey! I'm ") + green_("Rémi Robichet") + green(", 23 years old front developer 🎉"));
@@ -29,20 +34,25 @@ function showResume() {
     console.log();
     console.log(grey(new inquirer.Separator()));
     handleResume();
-}
+};
 
 function handleResume() {
-    inquirer.prompt(resumeOptions).then(answer => {
+    const options = {
+        type: "list",
+        name: "resumeOptions",
+        message: "What do you want to know",
+        choices: [...Object.keys(data), "exit"].map(x => capitalize(x))
+    };
+    inquirer.prompt(options).then(answer => {
         if (answer.resumeOptions === "Exit") {
             console.log(green("Bye bye 👋"));
             return;
-        };
-
-        const options = data[`${answer.resumeOptions}`]
+        }
+        const options = data[`${answer.resumeOptions}`.toLowerCase()];
         if (options) {
             console.log(grey(new inquirer.Separator()));
             console.log();
-            if (answer.resumeOptions === 'Education & Experience') {
+            if (answer.resumeOptions === 'Career') {
                 options.forEach(info => {
                     console.log(whiteBgBlue(info.date));
                     console.log(blue(info.mission));
@@ -62,9 +72,9 @@ function handleResume() {
                         console.log();
                     }
                 });
-            } else {
+            } else if (answer.resumeOptions === 'Contact') {
                 options.forEach(info => {
-                    console.log(blue(info));
+                    console.log(info.icon + '  ' + blue(info.data));
                     console.log();
                 });
             }
@@ -82,10 +92,9 @@ function handleResume() {
                 handleResume();
             } else {
                 console.log(green("Bye bye 👋"));
-                return;
             }
         });
-    }).catch(err => console.log('Ooops,', err))
+    }).catch(err => console.log('Ooops, ', err))
 }
 
-showResume();
+getHttpData();

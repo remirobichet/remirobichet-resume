@@ -7,6 +7,7 @@
   "author": "Rémi Robichet",
   "license": "MIT",
   "dependencies": {
+    "bent": "^7.0.6",
     "chalk": "^3.0.0",
     "inquirer": "^7.0.3"
   },
